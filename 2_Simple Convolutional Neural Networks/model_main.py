@@ -6,7 +6,7 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
-from date_process import get_train_eval_data
+from data_process import get_train_eval_data
 import os
 
 
@@ -36,8 +36,15 @@ def model():
 
 if __name__ == "__main__":
     # 数据集路径
-    path = os.path.join(os.getcwd(), 'data')
+    path = os.path.join(os.getcwd(), 'data_new')
+    # get the train data
     x, y = get_train_eval_data(path)
+
+    tensorb_NAME = 'Cats-vs-Dog-CNN'
+    tensorboard = tf.keras.callbacks.TensorBoard(log_dir="logs/{}".format(tensorb_NAME))
+
     model = model()
-    model.fit(x, y, batch_size=32, epochs=4, validation_split=0.1)
+    model.fit(x, y, batch_size=32, epochs=4, validation_split=0.1, callbacks=[tensorboard])
+
+
 

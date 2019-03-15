@@ -69,7 +69,7 @@ def figshow(array):
 
 
 def get_train_eval_data(path):
-    categories = ['Cat_resize', 'Dog_resize']
+    categories = ['Cat', 'Dog']
     data = []
     x = []
     y = []
@@ -91,7 +91,7 @@ def get_train_eval_data(path):
                     data.append([img_np, label])
 
     data = np.array(data)
-    # print(data.shape)
+    print(data.shape)
     figshow(data)
 
     index = np.arange(data.shape[0])
@@ -113,9 +113,51 @@ def get_train_eval_data(path):
     return x, y
 
 
+def get_predict_data(path):
+    path=os.path.join(path, 'test_image/')
+    x = []
+
+    # label: 0:Cat; 1:Dog
+    # path_image = os.path.join(path, category)
+
+    for file in tqdm(os.listdir(path)):
+        # print(file)
+        if file.endswith('.jpg'):
+            with Image.open(os.path.join(path, file)) as img:
+                img = img.convert('L')
+                img_np = np.array(img)
+                plt.imshow(img_np)
+                # img = img_np[]
+                # print(img_np.shape)
+                x.append([img_np,])
+
+    x = np.array(x)
+    print(x.shape)
+    # plt.imshow(x[0])
+
+    # index = np.arange(data.shape[0])
+    # np.random.shuffle(index)
+    # data = data[index, :]
+    # print(data.shape)
+    # figshow(data)
+    #
+    # for i in range(data.shape[0]):
+    #     x.append(data[i, 0])
+    #     y.append(data[i, 1])
+
+    x = np.array(x)/255.0
+    # y = np.array(y)/255.0
+    # x = x.reshape(-1, 100, 100, 1)
+    print(x.shape)
+    # print(y.shape)
+
+    # return x
+
+
+
 if __name__ == "__main__":
     # 数据集路径
-    path = os.path.join(os.getcwd(), 'data')
+    path = os.path.join(os.getcwd(), 'data_new')
 
     # 预览数据集
     # datasets_pic(path=path)
@@ -129,6 +171,9 @@ if __name__ == "__main__":
     # x, y = get_train_eval_data(path=path)
     # print(x.shape)
     # print(x[0].shape)
+
+    get_predict_data(path)
+
 
 
 
